@@ -60,37 +60,33 @@ void SLL::appendNode(int value){
     length ++;
 }
 
+void SLL::insertAt(int value, int ind){
 
-// void SLL::deleteNodeAt(int ind){
-//     if ((head == nullptr) || (ind < 0) || (ind>=length)) return;
-//     Node *toDelete = nullptr;
+    if ((ind < 0) || (ind > length)) return;
 
-//     if (ind == 0){
-//         toDelete = head;
-//         head = head->next;
+    Node *newNode = new Node();
+    newNode->value = value;
 
-//         if (length == 1){
-//             tail == nullptr;
-//         }
+    if (ind == 0){
+        newNode->next = head;
+        head = newNode;
+        length++;
+        return;
+    }
 
-//     }
-//     else {
-//         Node *prev = head;
-//         for (int i = 0; i<ind-1; i++){
-//             prev = prev->next;
-//         }
-//         toDelete = prev->next;
-//         prev->next = toDelete->next;        //bypass the node to be deleted
+    // pointer traversal
+    Node *trav = head;
+    for (int i = 1; i <= ind-1; i++){
+        trav = trav->next;      // trav is at the index, one less than where newNode has to be added
+    }
+    newNode->next = trav->next;
+    trav->next = newNode;
 
-//         if (ind == length - 1){
-//             tail = prev;
-//         }
-//     }
-//     delete toDelete;
-//     length--;
-// }
-
-
+    if(ind == length-1){
+        tail = newNode;
+    }
+    length++;
+}
 
 void SLL::deleteNodeAt(int ind){
     if ((ind < 0) || (ind >= length) || (head == nullptr)) return;
@@ -126,7 +122,6 @@ void SLL::deleteNodeAt(int ind){
     }
 }
 
-
 void SLL::deleteByVal(int value){
     if (head == nullptr){
         std::cout << "Invalid Operation" << std::endl;
@@ -152,4 +147,49 @@ void SLL::deleteByVal(int value){
     else{
         deleteNodeAt(indx);
     }
+}
+
+void SLL::reverseSLL(){
+    if (length == 1 || length == 0) return;
+
+    Node *trav1 = head;
+    Node *trav2 = head->next;
+    for (int i = 0; i<length-1; i++){
+        Node *temp = trav2->next;
+        trav2->next = trav1;
+        trav1 = trav2;
+        trav2 = temp;
+    }
+    tail = head;
+    head = trav1;
+    tail->next = nullptr;
+}
+
+int SLL::getLength(){
+    return length;
+}
+
+int SLL::getNode(int ind){
+    Node *trav = head;
+
+    for (int i = 1; i <= ind; i++){
+        trav = trav->next;
+    }
+    return trav->value;
+}
+
+int SLL::getIndex(int value){
+    Node *trav = head;
+    int counter = 0;
+    int found = 1;
+    while (trav->value != value){
+        trav = trav->next;
+        counter++;
+        if (counter == length-1){
+            found = 0;
+            break;
+        }
+    }
+    if (found) return counter;
+    else return -1;
 }

@@ -20,6 +20,11 @@ class SLL{
         void deleteNodeAt(int ind);
         void deleteByVal(int val);
         void printSLL();
+        void reverseSLL();
+        void insertAt(int value, int ind);
+        int getLength();
+        int getNode(int ind);
+        int getIndex(int value);
 };
 
 #endif

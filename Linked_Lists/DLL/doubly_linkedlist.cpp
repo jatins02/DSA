@@ -250,7 +250,3 @@ int DLL::getIndex(int val){
     if (found) return counter;
     else return -1;
 }
-
-
-
-

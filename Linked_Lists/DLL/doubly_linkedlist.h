@@ -27,6 +27,4 @@ class DLL{
         int getIndex(int val);
 };
 
-
-
 #endif

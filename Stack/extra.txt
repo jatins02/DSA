@@ -1,0 +1,142 @@
+When you use one class inside another (like putting a DynamicArr inside a Stack), 
+you are practicing Composition. This is the "Has-A" relationship: a Stack 'has a' Dynamic Array.
+
+Here is the step-by-step procedure to link them correctly:
+
+# Step 1: The Header Inclusion
+In your "outer" class header (stack.h), you must include the header of the "inner" class. 
+This tells the compiler exactly how much memory the inner object needs.
+
+#ifndef STACK_H
+#define STACK_H
+
+#include "dynamicArr.h" // Step 1: Include the header
+
+class Stack {
+private:
+    int last;
+    DynamicArr arr;    // Step 2: Declare the object as a member
+public:
+    Stack(int size);
+};
+#endif
+
+
+# Step 2: Passing Arguments to the Member Constructor
+
+This is the part most beginners find tricky. Since 'arr' is part of Stack, it needs to be built 
+before the Stack's body starts. You use a "Member Initializer List".
+
+// Use the colon (:) followed by the member name and the arguments
+Stack::Stack(int size) : arr(size) { 
+    last = -1; // Now you can set other variables
+}
+
+What happens here: You are telling C++, 
+"When you build a Stack, immediately build the arr member using its 'int' constructor."
+
+
+# Step 3: Using the Inner Methods
+
+To use the methods of the DynamicArr, you use the dot operator (.) on the member variable 
+name you defined in the header.
+
+If your DynamicArr has a method called insertAt(int index, int value), you call it inside 
+your Stack methods like this:
+
+void Stack::push(int val) {
+    last++;
+    // Call the method from the 'arr' object
+    arr.insertAt(last, val); 
+}
+
+
+# Step 4: Compiling the "Link"
+
+Because your code now spans across multiple files, the computer needs to see the source code 
+for both classes to create the final program.
+
+If your files are in the same folder, run:
+
+bash
+g++ main.cpp stack.cpp dynamicArr.cpp -o my_program
+
+
+# Step 5: Handling the Destructor
+
+Since you used Composition, you don't need to do anything special in the Stack destructor.
+
+1. When the 'Stack' object is deleted, it automatically triggers the destructor for 'arr'.
+2. arr's destructor will then run its own "delete" logic to clean up the heap.
+3. This "chain reaction" ensures no memory leaks occur.
+
+
+# Common Mistakes to Avoid:
+
+* Redeclaring the member: Don't write DynamicArr arr(size); inside the `{}` of the Stack constructor. 
+This creates a local temporary variable that dies immediately, leaving your actual member `arr` 
+uninitialized or incorrectly initialized.
+* Forgetting the Header: If stack.h can't find dynamicArr.h, it won't know the size of the Stack object, 
+and you'll get a "size of arr is unknown" error.
+
+
+
+stack.h
+
+#ifndef STACK_H
+#define STACK_H
+#include "/media/jatins02/New Volume/DSA_/DSA/Dynamic_Array/dynamicArr.h"
+
+// implementing stacks using dynamic arrays
+class Stack{
+    private:
+        int length;
+        int last;
+        DynamicArr arr;
+    
+    public:
+        // methods of this class, push, pop, peak, isEmpty, size
+        Stack(int length);
+        ~Stack();
+};
+
+#endif
+
+
+
+
+stack.cpp
+
+#include <iostream>
+#include "stack.h"
+
+Stack::Stack(int length) : arr(length){
+    this->length = length;
+    last = 0;
+}
+
+Stack::~Stack(){
+    length = 0;
+}
+
+
+
+
+main.cpp
+
+#include <iostream>
+#include "stack.h"
+
+int main(){
+
+    Stack stack(0);
+
+    return 0;
+}
+
+
+
+
+
+
+

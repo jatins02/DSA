@@ -18,6 +18,10 @@ DynamicArr::~DynamicArr(){              // destructor implementation
     free(arr);
 }
 
+int DynamicArr::eleAt(int ind){
+    return *(arr+ind);
+}
+
 void DynamicArr::reverseArr(){
 
     int *temp = (int *)calloc(inSize, sizeof(int));

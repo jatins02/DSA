@@ -23,7 +23,7 @@ class DynamicArr{
         void appendEle(int ele);
         void popEle();
         void sortArr(int flag);
-
+        int eleAt(int ind);
 };
 
 #endif  // Header guard end

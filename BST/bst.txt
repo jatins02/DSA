@@ -1,0 +1,93 @@
+this is the discarded insertNode function that was written originally:
+
+void BinarySearchTree::insertNode(int val){
+    Node *newnode = new Node();
+    newnode->value = val;
+
+    if (length == 0){
+        // this node is the root node
+        newnode->left = nullptr;
+        newnoode->right = nullptr;
+        root = newnode;
+        size++;
+        height = 1;
+    }
+    else{
+        // find its place in the tree and insert it at the required place
+        if (val < root->value){
+            // traverse down the left side of the root node to see where to place the element
+            Node *curr = root;
+            while(val < curr->left->val){
+                curr = curr->left;
+            }
+
+            // newnode value is less than or equal to the curr node
+            if (val == curr->value){
+                // insert the newnode at the right of the curr node
+                newnode->left = nullptr;
+                newnode->right = curr->right;
+                curr->right = newnode;
+            }
+            else {
+                // insert the newnode at the left of the curr node
+                newnode->left = curr->left;
+                newnode->right = nullptr;
+                curr->left = newnode;
+            }
+        }
+
+        else if (val == root->value){
+            // insert the newnode at the right of the root node
+            newnode->right = root->right;
+            newnode->left = nullptr;
+            root->right = newnode;
+        }
+
+        else{
+            // value is greater than the root node
+            Node *curr = root;
+            while (val > curr->right->value){
+                curr = curr->right;
+            }
+
+            // now the val is greater than or equal to the curr node, in both the cases we insert the newnode at the right
+            newnode->right = curr->right;
+            newnode->left = nullptr;
+            curr->right = newnode;
+        }
+
+        size++;
+    }
+}
+
+reasons this function was discarded:
+1. the function was not complete, it was not doing what it was supposed to doing
+2. what it was supposed to do was wrong, the function hadbeen written with an intent, to add the newnode
+at the first place suited, this is not how inserting in a binary tree is done.
+the newnode are always added in as leafs in the binary tree, not a node in the middle of the tree.
+
+
+
+
+
+for the tree traversal algorithms we used the public wrapper/private helper approach,
+the user calls the publicly available version of the function, then we privately (behind the scenes), pass in the 
+required value to the private copy of the function to work;
+
+
+
+
+the three traversals, inorder, preorder and postorders are different approaches for dfs.
+levelorderTrav is the main approach for bfs, it uses a queue.
+
+
+the implementation of queue done, does not fit for it to be used other classes.
+therefore, the levelorderTrav is done using recursion here, when the queue class will be fixed to hold, not only the values
+but the node pointers, then it will be usable and the code in this class will be updated.
+
+the current recursive approach of level order traversal of the binary tree works, but is slow, having time complexity of 
+O(N2), rathar than the O(N), it should be.
+
+
+
+

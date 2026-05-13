@@ -226,7 +226,7 @@ int DLL::getLength(){
     return length;
 }
 
-int DLL::getNode(int ind){
+int DLL::getNodeValue(int ind){
     Node *trav = head;
     for (int i = 1; i<=ind; i++){
         trav = trav->next;
@@ -249,4 +249,13 @@ int DLL::getIndex(int val){
     }
     if (found) return counter;
     else return -1;
+}
+
+Node *DLL::getNode(int ind){
+    Node *trav = head;
+    for (int i = 1; i <= ind; i++){
+        trav = trav->next;
+    }
+
+    return trav;
 }

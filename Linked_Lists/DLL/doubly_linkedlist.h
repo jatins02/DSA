@@ -23,8 +23,9 @@ class DLL{
         void deleteAt(int ind);
         void deleteVal(int val);
         int getLength();
-        int getNode(int ind);
+        int getNodeValue(int ind);
         int getIndex(int val);
+        Node *getNode(int ind);
 };
 
 #endif

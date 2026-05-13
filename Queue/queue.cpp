@@ -36,11 +36,11 @@ void Queue::dequeue(){
 //     }
 // }
 
-std::string Queue::peek(){
+Node *Queue::peek(){
     if (length >= 1){
-        return std::to_string(dll.getNode(0));
+        return dll.getNode(0);
     }
-    return "Null";
+    return nullptr;
 }
 
 int Queue::isEmpty(){

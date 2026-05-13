@@ -15,7 +15,7 @@ public:
     ~Queue();
     void enqueue(int val);
     void dequeue();
-    std::string peek();
+    Node *peek();
     int isEmpty();
     int size();
 };

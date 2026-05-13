@@ -1,6 +1,9 @@
 #ifndef BINARY_SEARCH_TREE_H
 #define BINARY_SEARCH_TREE_H
 
+#include "/media/jatins02/New Volume/DSA_/DSA/Queue/queue.h"
+#include "/media/jatins02/New Volume/DSA_/DSA/Stack/stack.h"
+
 struct Node{
     int value;
     Node *left;
@@ -40,6 +43,9 @@ public:
     void postorderTrav();
 
     void levelorderTrav();
+
+    void bfsTrav();
+    void dfsTrav();
 };
 
 #endif

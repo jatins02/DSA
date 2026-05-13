@@ -1,5 +1,7 @@
 #include <iostream>
 #include "bst.h"
+#include "/media/jatins02/New Volume/DSA_/DSA/Queue/queue.h"
+#include "/media/jatins02/New Volume/DSA_/DSA/Stack/stack.h"
 
 BinarySearchTree::BinarySearchTree(){       // constructor implementation
     height = 0;
@@ -214,3 +216,28 @@ void BinarySearchTree::printCurrentLevel(Node *node, int level){
 }
 
 
+// algo to traverse the tree using BFS
+void BinarySearchTree::bfsTrav(){
+    // queue implementation doesn't store the nodes rn, only holds the int value in the nodes
+    Queue q;
+    q.enqueue(root);
+    while (!q.isEmpty()){
+        Node *curr = q.dequeue();
+        std::cout << curr->value << " ";
+        if (curr->left) q.enqueue(curr->left);
+        if (curr->right) q.enqueue(curr->right);
+    }
+}
+
+// algo to traverse the tree using DFS, implemented using a stack
+void BinarySearchTree::dfsTrav(){
+    Stack s;
+    s.pushEle(root);
+    while (!s.isEmpty()){
+        Node *curr = s.popEle();
+        std::cout << curr->value << " ";
+        // to traverse the tree right side deep first
+        if (curr->left) s.pushEle(curr->left);
+        if (curr->right) s.popEle(curr->right);
+    }
+}

@@ -36,6 +36,9 @@ public:
     int getHeight();
     int getMin();
     int getMax();
+    void removeNode(int val);
+    Node *getInOrderSuccessor(Node *node);
+    Node *searchParent(int val);
 
     // preorder, postorder, inorder traversals of the BST, that the user will call, the public functions
     void inorderTrav();

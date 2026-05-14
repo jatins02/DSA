@@ -190,6 +190,109 @@ void BinarySearchTree::postorderTrav(Node *node){
     std::cout << " " << node->value << " ";
 }
 
+// if the parent doesn't have value = val, then get its children, check their values, if the val > rchild, then make
+// rchild the parent, and shift lchild and rchild pointers downwards on the right, do the same of the left
+
+Node *BinarySearchTree::searchParent(int val){
+    Node *parent = root;
+    Node *lchild;
+    Node *rchild;
+    if (parent == nullptr) return nullptr;
+    else if (parent->value == val) return nullptr;
+    
+    lchild = (parent->left != nullptr) ? parent->left : nullptr;
+    rchild = (parent->right != nullptr) ? parent->right : nullptr;
+
+    // check for the lval and rval of the parent, then move the parent pointer accordingly
+    while (!((lchild == nullptr) && (rchild == nullptr))){
+        if (lchild != nullptr && lchild->value == val) return parent;
+        else if (rchild != nullptr && rchild->value == val) return parent;  
+
+        else if (parent->value > val){
+            parent = lchild;
+        }
+        else{
+            parent = rchild;
+        }
+
+        if (parent == nullptr) return parent;
+        else{
+            lchild = (parent->left != nullptr) ? parent->left : nullptr;
+            rchild = (parent->right != nullptr) ? parent->right : nullptr;
+        }
+    }
+    return nullptr;
+}
+
+Node *BinarySearchTree::getInOrderSuccessor(Node *node){
+    if (node->right == nullptr) return nullptr;
+
+    Node *trav = node->right;
+    while (trav->left != nullptr){
+        trav = trav->left;
+    }
+    return trav;
+}
+
+void BinarySearchTree::removeNode(int val){
+    Node *tobedeleted = searchNode(val);
+    Node *parent = searchParent(val);
+
+    if (tobedeleted == nullptr){
+       // node not found, or something of that sort
+       return;
+    }
+    else if (tobedeleted == root){
+        Node *inorderSuccessor = getInOrderSuccessor(tobedeleted);
+        root = inoderSuccessor;
+        inorderSuccessor->left = tobedeleted->left;
+        inorderSuccessor->right = tobedeleted->right;
+        delete tobedeleted;
+    }
+    else{
+        // node is found, now 3 cases, 1. two children, 2. one child, 3. child
+        if ((tobedeleted->left != nullptr) && (tobedeleted->right != nullptr)){       // case when the node has 2 children
+            // find the smallest child from the right side and substitute it in place of the node to be deleted
+            Node *inorderSuccessor = getInOrderSuccessor(tobedeleted);
+
+            if (inorderSuccessor->right != nullptr){
+                Node *parentofSuccessor = searchParent(inorderSuccessor->value);
+                parentofSuccessor->left = inorderSuccessor->right;
+                
+            }
+
+            inorderSuccessor->left = tobedeleted->left;
+            inorderSuccessor->right = tobedeleted->right;
+            if (parent->right->val == tobedeleted->value){
+                // rightchild to be deleted
+                parent->right = inorderSuccessor;
+            }
+            else{
+                // left child to be deleted
+                parent->left = inoderSuccessor;
+            }
+        }
+        else if (((tobedeleted->left == nullptr) && (tobedeleted->right != nullptr)) ||
+                 ((tobedeleted->left != nullptr) && (tobedeleted->right == nullptr))){        // case with one child only
+            
+            if (parent->right->value == tobedeleted->value){
+                // tobedeleted is the right child of the parent node
+                parent->right = (tobedeleted->left == nullptr) ? tobedeleted->right : tobedeleted->left;
+            }
+            else{
+                // tobedeleted is the left child of the parent node
+                parent->left = (tobedeleted->left == nullptr) ? tobedeleted->right : tobedeleted->left;
+            }
+            
+        }
+        else if (tobedeleted->left == nullptr && tobedeleted->right == nullptr){
+            Node *parent = searchParent(tobedeleted);
+            parent->left = nullptr;
+            parent->right = nullptr;
+        }
+        delete tobedeleted;     
+    }
+}
 
 // level order traversal of a binary search tree is done with the help of a queue, the implementation of the queue, that
 // I have done is based on the values of the nodes rathar than the nodes themselves, making it not fit for levelorderTrav() here

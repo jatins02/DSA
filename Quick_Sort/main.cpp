@@ -7,7 +7,7 @@ void quickSort(std::vector<int> &arr, int arrSize);
 
 int main(){
 
-    std::vector<int> arr = {22, 12, 5, 2, 1, 7, 14, 2};
+    std::vector<int> arr = {2, 2, 2};//{22, 12, 5, 2, 1, 7, 14, 2};
     int arrSize = arr.size();
     quickSort(arr, arrSize);
 
@@ -38,7 +38,7 @@ void quickSort(std::vector<int> &arr, int arrSize){
         }
     }
 
-    swapped -= 1;       // to counter the last increment of swapped.
+    swapped = (swapped > 0) ? swapped - 1 : 0;       // to counter the last increment of swapped.
 
     // after this pass, all elements to the right of the pivot should be greater than or equal to the pivot
     // and elements to the left are less than the pivot.

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+// implementation fails, infinite loop made incase of an already sorted array
+
 void quickSort(std::vector<int> &arr, int arrSize);
 
 int main(){

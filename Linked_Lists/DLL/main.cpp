@@ -3,7 +3,7 @@
 
 int main(){
 
-    DLL dll;
+    DLL<int> dll;
     dll.appendNode(22);
     dll.appendNode(12);
     dll.appendNode(2005);

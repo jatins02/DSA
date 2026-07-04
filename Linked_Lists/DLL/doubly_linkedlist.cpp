@@ -1,15 +1,17 @@
 #include <iostream>
 #include "doubly_linkedlist.h"
 
-DLL::DLL(){
+template <typename T>
+DLL<T>::DLL(){
     head = nullptr;
     tail = nullptr;
     length = 0;
 }
 
-DLL::~DLL(){
-    Node *trav1 = head;
-    Node *trav2;
+template <typename T>
+DLL<T>::~DLL(){
+    Node<T> *trav1 = head;
+    Node<T> *trav2;
     for (int i = 0; i < length; i++){
         trav2 = trav1->next;
         delete trav1;
@@ -21,8 +23,9 @@ DLL::~DLL(){
     length = 0;
 }
 
-void DLL::prependNode(int val){
-    Node *newNode = new Node();
+template <typename T>
+void DLL<T>::prependNode(T val){
+    Node<T> *newNode = new Node<T>();
     newNode->value = val;
 
     if (head == nullptr){
@@ -41,8 +44,9 @@ void DLL::prependNode(int val){
     length++;
 }
 
-void DLL::printDLL(){
-    Node *trav = head;
+template <typename T>
+void DLL<T>::printDLL(){
+    Node<T> *trav = head;
     do{
         std::cout << trav->value << " -> ";
         trav = trav->next;
@@ -51,14 +55,15 @@ void DLL::printDLL(){
     std::cout << std::endl;
 }
 
-void DLL::appendNode(int val){
+template <typename T>
+void DLL<T>::appendNode(T val){
 
     if (head == nullptr){
         prependNode(val);
         return;
     }
     
-    Node *newNode = new Node();
+    Node<T> *newNode = new Node<T>();
     newNode->value = val;
     newNode->next = head;
 
@@ -70,7 +75,8 @@ void DLL::appendNode(int val){
     length++;
 }
 
-void DLL::insertAt(int ind, int val){
+template <typename T>
+void DLL<T>::insertAt(int ind, T val){
 
     if ((ind < 0) || (ind > length)) return;
 
@@ -83,11 +89,10 @@ void DLL::insertAt(int ind, int val){
         return;
     }
 
-
     // you could do this the normal way, but using doubly linked list, you can traverse the list backwards, thus increase the efficiency
-    Node *trav = head;
+    Node<T> *trav = head;
 
-    Node *newNode = new Node();
+    Node<T> *newNode = new Node<T>();
     newNode->value = val;
     if (ind < length/2){
         for (int i = 0; i<ind-1; i++){
@@ -100,7 +105,7 @@ void DLL::insertAt(int ind, int val){
             trav = trav->prev;
         }
     }
-    Node *nextNode = trav->next;
+    Node<T> *nextNode = trav->next;
     newNode->prev = trav;
     trav->next = newNode;
     newNode->next = nextNode;
@@ -108,7 +113,8 @@ void DLL::insertAt(int ind, int val){
     length++;
 }
 
-void DLL::deleteAt(int ind){
+template <typename T>
+void DLL<T>::deleteAt(int ind){
     if ((ind < 0) || (ind > length) || head == nullptr) return;
 
     if (length == 1){
@@ -119,7 +125,7 @@ void DLL::deleteAt(int ind){
         return;
     }
 
-    Node *todelete = nullptr;
+    Node<T> *todelete = nullptr;
     if (ind == 0){
         todelete = head;
         head = head->next;
@@ -127,7 +133,7 @@ void DLL::deleteAt(int ind){
         head->prev = tail;
     }
     else{
-        Node *trav = head;
+        Node<T> *trav = head;
         if (ind < length/2){
             for(int i = 0; i<ind-1; i++){
                 trav = trav->next;
@@ -140,7 +146,7 @@ void DLL::deleteAt(int ind){
                 }
         }
         todelete = trav->next;
-        Node *next = todelete->next;
+        Node<T> *next = todelete->next;
         trav->next = next;
         next->prev = trav;
 
@@ -152,12 +158,13 @@ void DLL::deleteAt(int ind){
     length--;
 }
 
-void DLL::deleteVal(int val){
+template <typename T>
+void DLL<T>::deleteVal(T val){
 
     if (head == nullptr) return;
 
     if (head->value == val){
-        Node *todelete = head;
+        Node<T> *todelete = head;
         if (length == 1){
             head = tail = nullptr;
         }
@@ -171,7 +178,7 @@ void DLL::deleteVal(int val){
         return;
     }
     else if (tail->value == val){
-        Node *todelete = tail;
+        Node<T> *todelete = tail;
         tail = tail->prev;
         tail->next = head;
         head->prev = tail;
@@ -180,29 +187,11 @@ void DLL::deleteVal(int val){
         return;
     }
 
-    Node *travF = head->next;
-    Node *travB = tail->prev; 
-    
-    // for (int i = 0; i < (length/2)+1; i++){
-    //     if (travF->value == val || travB->value == val){
-    //         Node *todelete = (travF->value == val) ? travF : travB;
-    //         Node *prevnode = todelete->prev;
-    //         Node *nextnode = todelete->next;
-    //         prevnode->next = nextnode;
-    //         nextnode->prev = prevnode;
-    //         delete todelete;
-    //         length--;
-    //         return;
-    //     }
-    //     else{
-    //         // traverse the pointers
-    //         travF = travF->next;
-    //         travB = travB->prev;
-    //     }
-    // }
+    Node<T> *travF = head->next;
+    Node<T> *travB = tail->prev; 
 
     for (int i = 0; i < (length - 2)/2 + 1; i++){
-        Node *todelete = nullptr;
+        Node<T> *todelete = nullptr;
 
         if (travF->value == val) todelete = travF;
         else if (travB->value == val) todelete = travB;
@@ -222,12 +211,14 @@ void DLL::deleteVal(int val){
     }
 }
 
-int DLL::getLength(){
+template <typename T>
+int DLL<T>::getLength(){
     return length;
 }
 
-int DLL::getNodeValue(int ind){
-    Node *trav = head;
+template <typename T>
+T DLL<T>::getNodeValue(int ind){
+    Node<T> *trav = head;
     for (int i = 1; i<=ind; i++){
         trav = trav->next;
 
@@ -235,8 +226,9 @@ int DLL::getNodeValue(int ind){
     return trav->value;
 }
 
-int DLL::getIndex(int val){
-    Node *trav = head;
+template <typename T>
+int DLL<T>::getIndex(T val){
+    Node<T> *trav = head;
     int counter = 0;
     int found = 1;
     while (trav->value != val){
@@ -251,8 +243,9 @@ int DLL::getIndex(int val){
     else return -1;
 }
 
-Node *DLL::getNode(int ind){
-    Node *trav = head;
+template <typename T>
+Node<T> *DLL<T>::getNode(int ind){
+    Node<T> *trav = head;
     for (int i = 1; i <= ind; i++){
         trav = trav->next;
     }

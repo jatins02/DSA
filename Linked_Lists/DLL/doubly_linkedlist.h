@@ -1,31 +1,34 @@
 #ifndef DOUBLY_LINKED_LIST
 #define DOUBLY_LINKED_LIST
 
+template <typename T>
 struct Node{
-    int value;
-    Node *prev;
-    Node *next;
+    T value;
+    Node<T> *prev;
+    Node<T> *next;
 };
 
+template <typename T>
 class DLL{
     private:
-        Node *head;
-        Node *tail;
+        Node<T> *head;
+        Node<T> *tail;
         int length;
 
     public:
         DLL();
         ~DLL();
-        void prependNode(int val);
+        void prependNode(T val);
         void printDLL();
-        void appendNode(int val);
-        void insertAt(int ind, int val);
+        void appendNode(T val);
+        void insertAt(int ind, T val);
         void deleteAt(int ind);
-        void deleteVal(int val);
+        void deleteVal(T val);
         int getLength();
-        int getNodeValue(int ind);
-        int getIndex(int val);
-        Node *getNode(int ind);
+        T getNodeValue(int ind);
+        int getIndex(T val);
+        Node<T> *getNode(int ind);
 };
 
+#include "doubly_linkedlist.cpp"
 #endif

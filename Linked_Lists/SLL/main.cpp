@@ -4,6 +4,7 @@
 int main(){
     // now values can be any datatype, and not only integers.
     
+    // to use any other datatype, mention it within <datatype>, and put in the value accordingly
     SLL<int> sll;
     sll.appendNode(22);
     sll.appendNode(12);

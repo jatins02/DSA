@@ -1,30 +1,34 @@
-#ifndef SINGLY_LINKED_LIST
-#define SINGLY_LINKED_LIST
+    #ifndef SINGLY_LINKED_LIST
+    #define SINGLY_LINKED_LIST
 
-struct Node{
-    int value;
-    Node *next;     // self referencing pointer to the next node
-};
+    template <typename T>
+    struct Node{
+        T value;
+        Node<T> *next;     // self referencing pointer to the next node
+    };
 
-class SLL{
-    private:
-        int length;
-        Node *head;
-        Node *tail;
+    template <typename T>
+    class SLL{
+        private:
+            int length;
+            Node<T> *head;
+            Node<T> *tail;
 
-    public:
-        SLL();
-        ~SLL();
-        void prependNode(int value);
-        void appendNode(int value);
-        void deleteNodeAt(int ind);
-        void deleteByVal(int val);
-        void printSLL();
-        void reverseSLL();
-        void insertAt(int value, int ind);
-        int getLength();
-        int getNode(int ind);
-        int getIndex(int value);
-};
+        public:
+            SLL();
+            ~SLL();
+            void prependNode(T value);
+            void appendNode(T value);
+            void deleteNodeAt(int ind);
+            void deleteByVal(T val);
+            void printSLL();
+            void reverseSLL();
+            void insertAt(T value, int ind);
+            int getLength();
+            T getNode(int ind);
+            int getIndex(T value);
+    };
 
-#endif
+    #include "singly_linkedlist.cpp"
+    
+    #endif

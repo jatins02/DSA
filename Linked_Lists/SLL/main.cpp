@@ -2,8 +2,9 @@
 #include "singly_linkedlist.h"
 
 int main(){
-
-    SLL sll;
+    // now values can be any datatype, and not only integers.
+    
+    SLL<int> sll;
     sll.appendNode(22);
     sll.appendNode(12);
     sll.appendNode(5);

@@ -1,16 +1,18 @@
 #include <iostream>
 #include "singly_linkedlist.h"
 
-SLL::SLL(){
+template <typename T>
+SLL<T>::SLL(){
     head = nullptr;
     tail = nullptr;
     length = 0;
 }
 
-SLL::~SLL(){
-    Node *curr = head;
+template <typename T>
+SLL<T>::~SLL(){
+    Node<T> *curr = head;
     while (curr != nullptr){
-        Node *nextNode = curr->next;
+        Node<T> *nextNode = curr->next;
         delete curr;
         curr = nextNode;
     }
@@ -19,8 +21,9 @@ SLL::~SLL(){
     length = 0;
 }
 
-void SLL::printSLL(){
-    Node *trav1 = head;
+template <typename T>
+void SLL<T>::printSLL(){
+    Node<T> *trav1 = head;
     while (trav1 != nullptr){
         std::cout << trav1->value << " -> ";
         trav1 = trav1->next;
@@ -28,8 +31,9 @@ void SLL::printSLL(){
     std::cout << "null" << std::endl;
 }
 
-void SLL::prependNode(int value){
-    Node *newNode = new Node();
+template <typename T>
+void SLL<T>::prependNode(T value){
+    Node<T> *newNode = new Node<T>();
     newNode->value = value;
     newNode->next = head;
 
@@ -41,16 +45,17 @@ void SLL::prependNode(int value){
     length ++;
 }
 
-void SLL::appendNode(int value){
+template <typename T>
+void SLL<T>::appendNode(T value){
 
-    Node *newNode = nullptr;
+    Node<T> *newNode = nullptr;
     if (head == nullptr){
-        newNode = new Node();
+        newNode = new Node<T>();
         head = newNode;
     }
     else{
         newNode = tail;
-        newNode->next = new Node();
+        newNode->next = new Node<T>();
         newNode = newNode->next;
     }
 
@@ -60,11 +65,12 @@ void SLL::appendNode(int value){
     length ++;
 }
 
-void SLL::insertAt(int value, int ind){
+template <typename T>
+void SLL<T>::insertAt(T value, int ind){
 
     if ((ind < 0) || (ind > length)) return;
 
-    Node *newNode = new Node();
+    Node<T> *newNode = new Node<T>();
     newNode->value = value;
 
     if (ind == 0){
@@ -75,7 +81,7 @@ void SLL::insertAt(int value, int ind){
     }
 
     // pointer traversal
-    Node *trav = head;
+    Node<T> *trav = head;
     for (int i = 1; i <= ind-1; i++){
         trav = trav->next;      // trav is at the index, one less than where newNode has to be added
     }
@@ -88,10 +94,11 @@ void SLL::insertAt(int value, int ind){
     length++;
 }
 
-void SLL::deleteNodeAt(int ind){
+template <typename T>
+void SLL<T>::deleteNodeAt(int ind){
     if ((ind < 0) || (ind >= length) || (head == nullptr)) return;
 
-    Node *trav1;
+    Node<T> *trav1;
 
     // deleting the first element of the linked list
     if (ind == 0){
@@ -106,7 +113,7 @@ void SLL::deleteNodeAt(int ind){
     }
 
     else{
-        Node *trav2;
+        Node<T> *trav2;
         trav1 = head;
         for (int i = 0; i < ind-1; i++){
             trav1 = trav1->next;
@@ -122,17 +129,18 @@ void SLL::deleteNodeAt(int ind){
     }
 }
 
-void SLL::deleteByVal(int value){
+template <typename T>
+void SLL<T>::deleteByVal(T value){
     if (head == nullptr){
         std::cout << "Invalid Operation" << std::endl;
         return;
     }
 
-    Node *trav1 = head;
+    Node<T> *trav1 = head;
 
     int indx = -1;
     for (int i = 0; i < length; i++){
-        int val = trav1->value;
+        T val = trav1->value;
         if (val == value){
             indx = i;
             break;
@@ -149,13 +157,14 @@ void SLL::deleteByVal(int value){
     }
 }
 
-void SLL::reverseSLL(){
+template <typename T>
+void SLL<T>::reverseSLL(){
     if (length == 1 || length == 0) return;
 
-    Node *trav1 = head;
-    Node *trav2 = head->next;
+    Node<T> *trav1 = head;
+    Node<T> *trav2 = head->next;
     for (int i = 0; i<length-1; i++){
-        Node *temp = trav2->next;
+        Node<T> *temp = trav2->next;
         trav2->next = trav1;
         trav1 = trav2;
         trav2 = temp;
@@ -165,12 +174,14 @@ void SLL::reverseSLL(){
     tail->next = nullptr;
 }
 
-int SLL::getLength(){
+template <typename T>
+int SLL<T>::getLength(){
     return length;
 }
 
-int SLL::getNode(int ind){
-    Node *trav = head;
+template <typename T>
+T SLL<T>::getNode(int ind){
+    Node<T> *trav = head;
 
     for (int i = 1; i <= ind; i++){
         trav = trav->next;
@@ -178,8 +189,9 @@ int SLL::getNode(int ind){
     return trav->value;
 }
 
-int SLL::getIndex(int value){
-    Node *trav = head;
+template <typename T>
+int SLL<T>::getIndex(T value){
+    Node<T> *trav = head;
     int counter = 0;
     int found = 1;
     while (trav->value != value){

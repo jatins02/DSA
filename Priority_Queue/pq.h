@@ -9,7 +9,8 @@ struct Node{
     int val;
     Node *left;
     Node *right;
-
+    int ind;
+    
     Node() : val(0), left(nullptr), right(nullptr){};
     Node(int x) : val(x), left(nullptr), right(nullptr){};
     Node(int x, Node *left, Node *right) : val(x), left(left), right(right){};
@@ -23,18 +24,13 @@ private:
     void destroyTree(Node *root){
         if (root == nullptr) return;
 
+        cout << root->val;
+
         Node *left = root->left;
         Node *right = root->right;
 
         destroyTree(left);
         destroyTree(right);
-    }
-
-    void swim(){
-
-    }
-    void sink(){
-            
     }
 
 public:
@@ -44,12 +40,11 @@ public:
     PQ();
     ~PQ();
     void push(int val);
-    int getLength();
-    bool isEmpty();
-    int top();
-    void printTree();
+    // int getLength();
+    // bool isEmpty();
+    // int top();
+    void printPQ();
 };
-
 
 #include "pq.cpp"
 #endif

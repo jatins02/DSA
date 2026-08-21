@@ -2,6 +2,7 @@
 #define PRIORITY_QUEUE
 
 #include <vector>
+#include <functional>
 
 using namespace std;
 
@@ -11,7 +12,7 @@ class PQ{
 private:
     vector<int> v;
     int size = 0;
-    bool (*comp)(int, int);
+    std::function<bool(int, int)> comp;
 
     void swim(int i);
     void sink(int i);
@@ -21,13 +22,10 @@ public:
     // Operations to be performed
     // push, size, isempty, top, pop, print-tree
     // private functions: swim, sink
-    static bool defaultCompareFunc(int a, int b){
-        return a > b;
-    }
-    
-    PQ(bool (*cf)(int, int) = defaultCompareFunc) : comp(cf){
+    PQ(std::function<bool(int, int)> cf = std::less<int>()) : comp(cf){
         v.push_back(__INT_MAX__);
     };
+
     ~PQ();
 
     void push(int val);
@@ -37,4 +35,5 @@ public:
     void printPQ();
 };
 
+#include "pq.cpp"
 #endif

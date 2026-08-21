@@ -1,10 +1,6 @@
 #include <iostream>
 #include "pq.h"
 
-// PQ::PQ(bool (*cf)(int, int) = defaultCompareFunc) : comp(cf){
-//     v.push_back(__INT_MAX__);
-// }
-
 PQ::~PQ(){
     // reset / remove the size and vector
     size = 0;

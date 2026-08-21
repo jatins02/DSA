@@ -1,9 +1,12 @@
 #include <iostream>
+#include <functional>
 #include "pq.h"
+
+bool maxfunc(int a, int b);
 
 int main(){
 
-    PQ pq;
+    PQ pq(greater<int>{});
     pq.push(1);
     pq.printPQ();
     cout << pq.getLength() << endl;
@@ -25,4 +28,8 @@ int main(){
     cout << pq.getLength() << endl;
 
     return 0;
+}
+
+bool maxfunc(int a, int b){
+    return a < b;
 }

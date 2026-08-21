@@ -2,23 +2,20 @@
 #include "pq.h"
 
 PQ::~PQ(){
-    // reset / remove the size and vector
     size = 0;
     v = {};
 }
 
 void PQ::swim(int i){
-    // get its parent and swap location if comparison
-    for (int p = (i)/2; p>0 && comp(v[p], v[i]); ){
+    for (int p = i/2; p>0 && comp(v[p], v[i]); ){
         swap(i, p);
         i = p;
-        p = (i-1)/2;
+        p = i/2;
     }
 }
 
 void PQ::sink(int i){
-    // get its children and swap location if comparison
-    while (true){
+    while (2*i <= size){
         int left = 2*i;
         int right = 2*i + 1;
         int thechild = left;
@@ -26,7 +23,7 @@ void PQ::sink(int i){
         if ((right <= size) && comp(v[left], v[right])){
             thechild = right;
         }
-        if ((left > size) && !comp(v[i], v[thechild])) break;
+        if (!comp(v[i], v[thechild])) break;
 
         swap(thechild, i);
         i = thechild;
@@ -35,13 +32,13 @@ void PQ::sink(int i){
 
 // takes in indices
 void PQ::swap(int i, int j){
+    if (i == j) return;
     int tmp = v[i];
     v[i] = v[j];
     v[j] = tmp;
 }
 
 void PQ::push(int val){
-    // push the element at the end of the array, then float it upwards
     v.push_back(val);
     size++;
     swim(size);
@@ -57,3 +54,16 @@ void PQ::printPQ(){
 }
 
 int PQ::getLength(){ return size; }
+
+bool PQ::isEmpty(){ return (size == 0); }
+
+int PQ::topEle(){ return v[1]; }
+
+void PQ::popEle(){
+    if (size == 0) return;
+
+    swap(1, size);
+    size--;
+    v.pop_back();
+    if (size > 0) sink(1);
+}

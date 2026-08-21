@@ -7,7 +7,6 @@
 using namespace std;
 
 // for now class implementation only holds integer values
-
 class PQ{
 private:
     vector<int> v;
@@ -19,19 +18,16 @@ private:
     void swap(int i, int j);
 
 public:
-    // Operations to be performed
-    // push, size, isempty, top, pop, print-tree
-    // private functions: swim, sink
     PQ(std::function<bool(int, int)> cf = std::less<int>()) : comp(cf){
         v.push_back(__INT_MAX__);
     };
 
     ~PQ();
-
     void push(int val);
     int getLength();
-    // bool isEmpty();
-    // int top();
+    bool isEmpty();
+    int topEle();
+    void popEle();
     void printPQ();
 };
 

@@ -37,5 +37,4 @@ public:
     void printPQ();
 };
 
-#include "pq.cpp"
 #endif

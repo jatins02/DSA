@@ -56,26 +56,34 @@ public:
 
     void print();
     void insert(pair<int, int> p);
+    void remove(int name);
+    void hatao(int ki);
+    int topVal();
+    void popEle();
+    int valueof(int name);
+    void decreaseKey(int name, int val);
+    void increaseKey(int name, int val);
 
     /*
     methods to implement
-    IPQ()
-    ~IPQ()
-    printIPQ()
-    push()
-    swim()
-    sink()
+    IPQ()   ==
+    ~IPQ()  ==
+    printIPQ()  ==
+    push()  ==
+    swim()  ==
+    sink()  ==
 
-    top()
-    pop()
-    delete(ki)
-    valueof(ki)
+    remove(key) ==
+    hatao(ki) == 
+    top()   ==
+    pop()   ==
+    valueof(ki)     ==
     contains(ki)
     peekMinKeyIndex()
     pollMinKeyIndex()
     peekMinValue()
-    insert(ki, value)
-    update(ki, value)
+    insert(ki, value)   ==
+    update(ki, value)   
     decreaseKey(ki, value)
     increaseKey(ki, value)
     */

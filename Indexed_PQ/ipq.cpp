@@ -67,3 +67,47 @@ void IPQ::insert(pair<int, int> p){
     sz++;
     ki++;
 }
+
+void IPQ::remove(int name){
+    hatao(giveNamegetKI[name]);
+}
+
+void IPQ::hatao(int ki){
+    int i = pm[ki];
+    swap(i, sz);
+    sz--;
+    sink(i);
+    swim(i);
+    vals[ki] = __INT_MAX__;
+    pm[ki] = -1;
+    im[sz] = -1;
+}
+
+int IPQ::topVal(){
+    return vals[im[0]];
+}
+
+void IPQ::popEle(){
+    hatao(im[0]);
+}
+
+int IPQ::valueof(int name){
+    int thisKI = giveNamegetKI[name];
+    return vals[thisKI];
+}
+
+void IPQ::decreaseKey(int name, int val){
+    int thisKI = giveNamegetKI[name];
+    if (less(val, vals[thisKI])){
+        vals[thisKI] = val;
+        swim(pm[thisKI]);
+    }
+}
+
+void IPQ::increaseKey(int name, int val){
+    int thisKI = giveNamegetKI[name];
+    if (less(vals[thisKI], val)){
+        vals[thisKI] = val;
+        sink(pm[thisKI]);
+    }
+}
